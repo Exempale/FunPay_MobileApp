@@ -1,0 +1,126 @@
+[
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-xxhdpi_ic_launcher_round.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-xxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/anim_slide_in_right.xml.flat",
+        "source": "com.funpay.app-main-50:/anim/slide_in_right.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/layout_activity_settings.xml.flat",
+        "source": "com.funpay.app-main-50:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/anim_fade_in.xml.flat",
+        "source": "com.funpay.app-main-50:/anim/fade_in.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_nav_orders.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_nav_orders.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-hdpi_ic_launcher_round.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-hdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_nav_home.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_nav_home.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_no_internet.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_no_internet.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-xhdpi_ic_launcher.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-xhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-hdpi_ic_launcher.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-hdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_notification.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_notification.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_nav_profile.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_nav_profile.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-xxxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-xhdpi_ic_launcher_round.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-xhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_home.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_home.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/anim_slide_out_left.xml.flat",
+        "source": "com.funpay.app-main-50:/anim/slide_out_left.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_settings.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/layout_activity_splash.xml.flat",
+        "source": "com.funpay.app-main-50:/layout/activity_splash.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_refresh.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_refresh.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_nav_chat.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_nav_chat.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/layout_activity_main.xml.flat",
+        "source": "com.funpay.app-main-50:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-xxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_nav_settings.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_nav_settings.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/xml_network_security_config.xml.flat",
+        "source": "com.funpay.app-main-50:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-mdpi_ic_launcher.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-mdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/menu_main_menu.xml.flat",
+        "source": "com.funpay.app-main-50:/menu/main_menu.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.funpay.app-main-50:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-mdpi_ic_launcher_round.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-mdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/anim_fade_out.xml.flat",
+        "source": "com.funpay.app-main-50:/anim/fade_out.xml"
+    },
+    {
+        "merged": "com.funpay.app-merged_res-48:/mipmap-xxxhdpi_ic_launcher.xml.flat",
+        "source": "com.funpay.app-main-50:/mipmap-xxxhdpi/ic_launcher.xml"
+    }
+]

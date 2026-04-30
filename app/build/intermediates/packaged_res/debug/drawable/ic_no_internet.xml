@@ -1,0 +1,42 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Облако без Wi-Fi (нет интернета) -->
+    <path
+        android:fillColor="@color/funpay_primary"
+        android:alpha="0.5"
+        android:pathData="M1,1 L23,23"
+        android:strokeColor="@color/error_text"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"/>
+
+    <path
+        android:fillColor="@color/text_secondary"
+        android:pathData="M12,21L12,21c-4.97,0 -9,-4.03 -9,-9 0,-4.54 3.38,-8.3 7.77,-8.88L12,21z"/>
+
+    <path
+        android:fillColor="@color/text_secondary"
+        android:pathData="M21,12c0,4.97 -4.03,9 -9,9v-2c3.86,0 7,-3.14 7,-7s-3.14,-7 -7,-7V3c4.97,0 9,4.03 9,9z"/>
+
+    <!-- Диагональная полоска "нет сигнала" -->
+    <path
+        android:strokeColor="@color/funpay_accent"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M3,3 L21,21"/>
+
+    <!-- Базовый значок Wi-Fi (серый) -->
+    <path
+        android:fillColor="@color/text_hint"
+        android:pathData="M1,9l2,2c4.97,-4.97 13.03,-4.97 18,0l2,-2C16.93,2.93 7.08,2.93 1,9z"/>
+    <path
+        android:fillColor="@color/text_hint"
+        android:pathData="M5,13l2,2c2.76,-2.76 7.24,-2.76 10,0l2,-2C15.14,9.14 8.87,9.14 5,13z"/>
+    <path
+        android:fillColor="@color/text_hint"
+        android:pathData="M9,17l3,3 3,-3c-1.65,-1.66 -4.34,-1.66 -6,0z"/>
+
+</vector>

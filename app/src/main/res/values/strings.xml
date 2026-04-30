@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Общее -->
+    <string name="app_name">FunPay</string>
+    <string name="app_version">Версия 1.0.0</string>
+    <string name="retry">Повторить</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">OK</string>
+
+    <!-- Нижняя навигация -->
+    <string name="nav_home">Главная</string>
+    <string name="nav_chat">Чаты</string>
+    <string name="nav_orders">Заказы</string>
+    <string name="nav_profile">Профиль</string>
+    <string name="nav_settings">Настройки</string>
+
+    <!-- Ошибки -->
+    <string name="error_no_internet">Нет соединения</string>
+    <string name="error_no_internet_desc">Проверьте подключение к интернету\nи попробуйте снова</string>
+    <string name="no_internet">Нет интернет-соединения</string>
+    <string name="error_file_chooser">Не удалось открыть менеджер файлов</string>
+
+    <!-- Выход -->
+    <string name="exit_title">Выход</string>
+    <string name="exit_message">Вы уверены, что хотите выйти из приложения?</string>
+    <string name="exit_yes">Выйти</string>
+    <string name="exit_no">Остаться</string>
+
+    <!-- Настройки — заголовок -->
+    <string name="settings_title">Настройки</string>
+
+    <!-- Настройки — секции -->
+    <string name="section_notifications">Уведомления</string>
+    <string name="section_data">Данные и кэш</string>
+    <string name="section_about">О приложении</string>
+
+    <!-- Уведомления -->
+    <string name="notif_enable">Уведомления</string>
+    <string name="notif_enable_desc">Проверять новые сообщения и заказы</string>
+    <string name="notifications_enabled">Уведомления включены</string>
+    <string name="notifications_disabled">Уведомления отключены</string>
+    <string name="check_interval">Интервал проверки (мин.)</string>
+    <string name="interval_minutes">Каждые %d мин.</string>
+
+    <!-- Данные -->
+    <string name="clear_cache">Очистить кэш WebView</string>
+    <string name="clear_cookies">Очистить cookies (выйти из аккаунта)</string>
+    <string name="cache_cleared">Кэш очищен</string>
+    <string name="cookies_cleared">Cookies удалены. Необходим повторный вход.</string>
+    <string name="clear_history">Очистить историю</string>
+    <string name="history_cleared">История очищена</string>
+    <string name="check_connection">Проверить соединение</string>
+    <string name="connection_ok">Подключено: %s</string>
+    <string name="connection_error">Нет соединения с интернетом</string>
+
+    <!-- О приложении -->
+    <string name="about_desc">Неофициальное Android-приложение для FunPay.\nВсе права на контент принадлежат funpay.com</string>
+
+    <!-- Уведомления — тексты -->
+    <string name="notif_message_title">Новое сообщение</string>
+    <string name="notif_message_text">У вас новое сообщение на FunPay</string>
+    <string name="notif_order_title">Новый заказ</string>
+    <string name="notif_order_text">Получен новый заказ на FunPay</string>
+
+    <!-- Каналы уведомлений -->
+    <string name="channel_messages_name">Сообщения</string>
+    <string name="channel_messages_desc">Уведомления о новых сообщениях</string>
+    <string name="channel_orders_name">Заказы</string>
+    <string name="channel_orders_desc">Уведомления о новых заказах</string>
+    <string name="channel_general_name">Общие</string>
+    <string name="channel_general_desc">Общие уведомления FunPay</string>
+
+    <!-- Меню -->
+    <string name="menu_refresh">Обновить</string>
+    <string name="menu_home">На главную</string>
+    <string name="menu_settings">Настройки</string>
+</resources>

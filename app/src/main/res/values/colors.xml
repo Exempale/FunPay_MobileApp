@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    colors.xml — светлая тема
+    Палитра: белый · синий (#2D8CFF) · голубой (#5AAAFF) · тёмный (#1A1A2E)
+    Без розового, без оранжевого.
+-->
+<resources>
+
+    <!-- ── FunPay Brand ────────────────────────────────── -->
+    <color name="funpay_primary">#2D8CFF</color>
+    <color name="funpay_primary_dark">#1A6FD4</color>
+    <color name="funpay_primary_light">#5AAAFF</color>
+
+    <!-- ── Фон (Light) ────────────────────────────────── -->
+    <color name="bg_primary">#FFFFFF</color>
+    <color name="bg_secondary">#F4F6FB</color>
+    <color name="surface">#FFFFFF</color>
+
+    <!-- ── Текст (Light) ──────────────────────────────── -->
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_hint">#9CA3AF</color>
+
+    <!-- ── Тулбар ─────────────────────────────────────── -->
+    <color name="toolbar_bg">#2D8CFF</color>
+    <color name="toolbar_text">#FFFFFF</color>
+
+    <!-- ── Нижняя навигация ───────────────────────────── -->
+    <color name="nav_bg">#FFFFFF</color>
+    <color name="nav_divider">#E5E9F0</color>
+    <color name="nav_inactive">#94A3B8</color>
+
+    <!-- ── Карточки / разделители ─────────────────────── -->
+    <color name="card_bg">#FFFFFF</color>
+    <color name="divider">#E5E9F0</color>
+    <color name="settings_section_color">#2D8CFF</color>
+
+    <!-- ── Ошибка ─────────────────────────────────────── -->
+    <color name="error_bg">#F4F6FB</color>
+
+    <!-- ── Switch / Slider ───────────────────────────── -->
+    <color name="switch_track">#BFDBFE</color>
+    <color name="slider_inactive">#BFDBFE</color>
+
+    <!-- ── Splash ─────────────────────────────────────── -->
+    <color name="splash_bg">#FFFFFF</color>
+
+    <!-- ── Status bar ─────────────────────────────────── -->
+    <color name="status_bar">#1A6FD4</color>
+
+    <!-- Алиасы для обратной совместимости -->
+    <color name="funpay_accent">#2D8CFF</color>
+    <color name="background_primary">#FFFFFF</color>
+    <color name="toolbar_background">#2D8CFF</color>
+    <color name="toolbar_title_color">#FFFFFF</color>
+    <color name="bottom_nav_background">#FFFFFF</color>
+    <color name="error_background">#F4F6FB</color>
+    <color name="error_text">#111827</color>
+    <color name="error_text_secondary">#6B7280</color>
+
+    <color name="splash_background">#FFFFFF</color>
+</resources>

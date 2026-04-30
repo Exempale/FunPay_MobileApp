@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_main.xml
+    Главный экран: прогресс-бар сверху + WebView + нижняя навигация.
+    Тулбар полностью убран — заголовок нигде не отображается.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- ════════════════════════════════════════════════════════
+         ПРОГРЕСС-БАР ЗАГРУЗКИ СТРАНИЦЫ (2dp, без тулбара)
+         ════════════════════════════════════════════════════════ -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:max="100"
+        android:visibility="gone"
+        android:progressTint="@color/funpay_primary"
+        android:progressBackgroundTint="@android:color/transparent"
+        android:indeterminate="false"/>
+
+    <!-- ════════════════════════════════════════════════════════
+         WEBVIEW (занимает всё пространство до навигации)
+         ════════════════════════════════════════════════════════ -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- FrameLayout позволяет наложить экран ошибки поверх WebView -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Основной WebView -->
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hardwareAccelerated="true"
+                android:overScrollMode="ifContentScrolls"/>
+
+            <!-- ── Кастомный экран ошибки (нет сети / сервер недоступен) ── -->
+            <LinearLayout
+                android:id="@+id/layoutError"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="40dp"
+                android:visibility="gone"
+                android:background="@color/bg_primary">
+
+                <ImageView
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:src="@drawable/ic_no_internet"
+                    android:contentDescription="@string/error_no_internet"
+                    android:alpha="0.45"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/error_no_internet"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/error_no_internet_desc"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:lineSpacingMultiplier="1.5"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRetry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/retry"
+                    android:layout_marginTop="28dp"
+                    android:paddingHorizontal="36dp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    app:cornerRadius="24dp"
+                    app:backgroundTintMode="src_in"
+                    android:backgroundTint="@color/funpay_primary"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!-- ════════════════════════════════════════════════════════
+         НИЖНЯЯ НАВИГАЦИЯ
+         5 кнопок: Главная · Чаты · Заказы · Профиль · Настройки
+         ════════════════════════════════════════════════════════ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/nav_bg"
+        android:elevation="12dp">
+
+        <!-- Тонкий разделитель сверху навигации -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:background="@color/nav_divider"/>
+
+        <!-- Строка с кнопками -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal">
+
+            <!-- ── Главная ── -->
+            <LinearLayout
+                android:id="@+id/btnNavHome"
+                style="@style/NavButton">
+
+                <ImageView
+                    android:id="@+id/imgNavHome"
+                    style="@style/NavIcon"
+                    android:src="@drawable/ic_nav_home"
+                    android:contentDescription="@string/nav_home"/>
+
+                <TextView
+                    android:id="@+id/lblNavHome"
+                    style="@style/NavLabel"
+                    android:text="@string/nav_home"/>
+
+            </LinearLayout>
+
+            <!-- ── Чаты ── -->
+            <LinearLayout
+                android:id="@+id/btnNavChat"
+                style="@style/NavButton">
+
+                <ImageView
+                    android:id="@+id/imgNavChat"
+                    style="@style/NavIcon"
+                    android:src="@drawable/ic_nav_chat"
+                    android:contentDescription="@string/nav_chat"/>
+
+                <TextView
+                    android:id="@+id/lblNavChat"
+                    style="@style/NavLabel"
+                    android:text="@string/nav_chat"/>
+
+            </LinearLayout>
+
+            <!-- ── Заказы ── -->
+            <LinearLayout
+                android:id="@+id/btnNavOrders"
+                style="@style/NavButton">
+
+                <ImageView
+                    android:id="@+id/imgNavOrders"
+                    style="@style/NavIcon"
+                    android:src="@drawable/ic_nav_orders"
+                    android:contentDescription="@string/nav_orders"/>
+
+                <TextView
+                    android:id="@+id/lblNavOrders"
+                    style="@style/NavLabel"
+                    android:text="@string/nav_orders"/>
+
+            </LinearLayout>
+
+            <!-- ── Профиль ── -->
+            <LinearLayout
+                android:id="@+id/btnNavProfile"
+                style="@style/NavButton">
+
+                <ImageView
+                    android:id="@+id/imgNavProfile"
+                    style="@style/NavIcon"
+                    android:src="@drawable/ic_nav_profile"
+                    android:contentDescription="@string/nav_profile"/>
+
+                <TextView
+                    android:id="@+id/lblNavProfile"
+                    style="@style/NavLabel"
+                    android:text="@string/nav_profile"/>
+
+            </LinearLayout>
+
+            <!-- ── Настройки ── -->
+            <LinearLayout
+                android:id="@+id/btnNavSettings"
+                style="@style/NavButton">
+
+                <ImageView
+                    android:id="@+id/imgNavSettings"
+                    style="@style/NavIcon"
+                    android:src="@drawable/ic_nav_settings"
+                    android:contentDescription="@string/nav_settings"/>
+
+                <TextView
+                    android:id="@+id/lblNavSettings"
+                    style="@style/NavLabel"
+                    android:text="@string/nav_settings"
+                    android:textColor="@color/nav_inactive"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

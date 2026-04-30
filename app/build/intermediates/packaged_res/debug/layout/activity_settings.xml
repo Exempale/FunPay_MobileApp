@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_settings.xml
+    Расширенный экран настроек.
+    Цвета: только белый, синий/голубой, чёрный/тёмный. Без розового.
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_secondary">
+
+    <!-- Тулбар настроек -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.FunPay.AppBar">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarSettings"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_bg"
+            app:titleTextColor="@color/toolbar_text"
+            app:navigationIconTint="@color/toolbar_text"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="24dp">
+
+            <!-- ════════════════════════════════════════════
+                 СЕКЦИЯ: УВЕДОМЛЕНИЯ
+                 ════════════════════════════════════════════ -->
+            <TextView
+                style="@style/SectionHeader"
+                android:text="@string/section_notifications"/>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/SettingsCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Включить уведомления -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/notif_enable"
+                                android:textSize="15sp"
+                                android:textColor="@color/text_primary"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/notif_enable_desc"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"
+                                android:layout_marginTop="2dp"/>
+
+                        </LinearLayout>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switchNotifications"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:thumbTint="@color/funpay_primary"
+                            app:trackTint="@color/switch_track"/>
+
+                    </LinearLayout>
+
+                    <!-- Разделитель -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/divider"
+                        android:layout_marginVertical="4dp"/>
+
+                    <!-- Интервал проверки -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/check_interval"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginTop="8dp"/>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/sliderInterval"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:valueFrom="5"
+                        android:valueTo="60"
+                        android:stepSize="5"
+                        android:value="15"
+                        app:thumbColor="@color/funpay_primary"
+                        app:trackColorActive="@color/funpay_primary"
+                        app:trackColorInactive="@color/slider_inactive"
+                        app:labelBehavior="gone"/>
+
+                    <TextView
+                        android:id="@+id/tvIntervalValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/funpay_primary"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ════════════════════════════════════════════
+                 СЕКЦИЯ: ДАННЫЕ И КЭШ
+                 ════════════════════════════════════════════ -->
+            <TextView
+                style="@style/SectionHeader"
+                android:text="@string/section_data"/>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/SettingsCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <!-- Очистить кэш -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnClearCache"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/clear_cache"
+                        android:textColor="@color/funpay_primary"
+                        app:strokeColor="@color/funpay_primary"
+                        app:cornerRadius="12dp"
+                        android:layout_marginBottom="8dp"/>
+
+                    <!-- Очистить cookies -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnClearCookies"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/clear_cookies"
+                        android:textColor="@color/funpay_primary"
+                        app:strokeColor="@color/funpay_primary"
+                        app:cornerRadius="12dp"
+                        android:layout_marginBottom="8dp"/>
+
+                    <!-- Проверить соединение -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCheckConnection"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/check_connection"
+                        android:textColor="@color/funpay_primary"
+                        app:strokeColor="@color/funpay_primary"
+                        app:cornerRadius="12dp"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ════════════════════════════════════════════
+                 СЕКЦИЯ: О ПРИЛОЖЕНИИ
+                 ════════════════════════════════════════════ -->
+            <TextView
+                style="@style/SectionHeader"
+                android:text="@string/section_about"/>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/SettingsCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"/>
+
+                    <TextView
+                        android:id="@+id/tvAppVersion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginTop="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_desc"
+                        android:textSize="13sp"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingMultiplier="1.4"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

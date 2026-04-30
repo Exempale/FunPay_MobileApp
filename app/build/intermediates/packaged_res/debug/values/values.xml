@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_primary">#FFFFFF</color>
+    <color name="bg_primary">#FFFFFF</color>
+    <color name="bg_secondary">#F4F6FB</color>
+    <color name="bottom_nav_background">#FFFFFF</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="divider">#E5E9F0</color>
+    <color name="error_background">#F4F6FB</color>
+    <color name="error_bg">#F4F6FB</color>
+    <color name="error_text">#111827</color>
+    <color name="error_text_secondary">#6B7280</color>
+    <color name="funpay_accent">#2D8CFF</color>
+    <color name="funpay_primary">#2D8CFF</color>
+    <color name="funpay_primary_dark">#1A6FD4</color>
+    <color name="funpay_primary_light">#5AAAFF</color>
+    <color name="nav_bg">#FFFFFF</color>
+    <color name="nav_divider">#E5E9F0</color>
+    <color name="nav_inactive">#94A3B8</color>
+    <color name="settings_section_color">#2D8CFF</color>
+    <color name="slider_inactive">#BFDBFE</color>
+    <color name="splash_background">#FFFFFF</color>
+    <color name="splash_bg">#FFFFFF</color>
+    <color name="status_bar">#1A6FD4</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="switch_track">#BFDBFE</color>
+    <color name="text_hint">#9CA3AF</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="toolbar_background">#2D8CFF</color>
+    <color name="toolbar_bg">#2D8CFF</color>
+    <color name="toolbar_text">#FFFFFF</color>
+    <color name="toolbar_title_color">#FFFFFF</color>
+    <string name="about_desc">Неофициальное Android-приложение для FunPay.\nВсе права на контент принадлежат funpay.com</string>
+    <string name="app_name">FunPay</string>
+    <string name="app_version">Версия 1.0.0</string>
+    <string name="cache_cleared">Кэш очищен</string>
+    <string name="cancel">Отмена</string>
+    <string name="channel_general_desc">Общие уведомления FunPay</string>
+    <string name="channel_general_name">Общие</string>
+    <string name="channel_messages_desc">Уведомления о новых сообщениях</string>
+    <string name="channel_messages_name">Сообщения</string>
+    <string name="channel_orders_desc">Уведомления о новых заказах</string>
+    <string name="channel_orders_name">Заказы</string>
+    <string name="check_connection">Проверить соединение</string>
+    <string name="check_interval">Интервал проверки (мин.)</string>
+    <string name="clear_cache">Очистить кэш WebView</string>
+    <string name="clear_cookies">Очистить cookies (выйти из аккаунта)</string>
+    <string name="clear_history">Очистить историю</string>
+    <string name="connection_error">Нет соединения с интернетом</string>
+    <string name="connection_ok">Подключено: %s</string>
+    <string name="cookies_cleared">Cookies удалены. Необходим повторный вход.</string>
+    <string name="error_file_chooser">Не удалось открыть менеджер файлов</string>
+    <string name="error_no_internet">Нет соединения</string>
+    <string name="error_no_internet_desc">Проверьте подключение к интернету\nи попробуйте снова</string>
+    <string name="exit_message">Вы уверены, что хотите выйти из приложения?</string>
+    <string name="exit_no">Остаться</string>
+    <string name="exit_title">Выход</string>
+    <string name="exit_yes">Выйти</string>
+    <string name="history_cleared">История очищена</string>
+    <string name="interval_minutes">Каждые %d мин.</string>
+    <string name="menu_home">На главную</string>
+    <string name="menu_refresh">Обновить</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="nav_chat">Чаты</string>
+    <string name="nav_home">Главная</string>
+    <string name="nav_orders">Заказы</string>
+    <string name="nav_profile">Профиль</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="no_internet">Нет интернет-соединения</string>
+    <string name="notif_enable">Уведомления</string>
+    <string name="notif_enable_desc">Проверять новые сообщения и заказы</string>
+    <string name="notif_message_text">У вас новое сообщение на FunPay</string>
+    <string name="notif_message_title">Новое сообщение</string>
+    <string name="notif_order_text">Получен новый заказ на FunPay</string>
+    <string name="notif_order_title">Новый заказ</string>
+    <string name="notifications_disabled">Уведомления отключены</string>
+    <string name="notifications_enabled">Уведомления включены</string>
+    <string name="ok">OK</string>
+    <string name="retry">Повторить</string>
+    <string name="section_about">О приложении</string>
+    <string name="section_data">Данные и кэш</string>
+    <string name="section_notifications">Уведомления</string>
+    <string name="settings_title">Настройки</string>
+    <style name="NavButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    <style name="NavIcon">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+    <style name="NavLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/nav_inactive</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="SectionHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/settings_section_color</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:paddingHorizontal">4dp</item>
+    </style>
+    <style name="SettingsCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">14dp</item>
+        <item name="cardBackgroundColor">@color/card_bg</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+    <style name="Theme.FunPay" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/funpay_primary</item>
+        <item name="colorPrimaryVariant">@color/funpay_primary_dark</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">@color/funpay_primary_light</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:colorBackground">@color/bg_primary</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/nav_bg</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:hardwareAccelerated">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="cardBackgroundColor">@color/card_bg</item>
+        <item name="materialButtonStyle">@style/Widget.FunPay.Button</item>
+    </style>
+    <style name="Theme.FunPay.Splash" parent="Theme.FunPay">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/splash_bg</item>
+        <item name="android:statusBarColor">@color/splash_bg</item>
+        <item name="android:navigationBarColor">@color/splash_bg</item>
+    </style>
+    <style name="ThemeOverlay.FunPay.AppBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:background">@color/toolbar_bg</item>
+        <item name="colorControlNormal">@color/toolbar_text</item>
+        <item name="android:textColorPrimary">@color/toolbar_text</item>
+    </style>
+    <style name="Widget.FunPay.Button" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">24dp</item>
+        <item name="backgroundTint">@color/funpay_primary</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+</resources>

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.funpay.app-mergeDebugResources-47:/layout/activity_splash.xml",
+        "source": "com.funpay.app-main-50:/layout/activity_splash.xml"
+    },
+    {
+        "merged": "com.funpay.app-mergeDebugResources-47:/layout/activity_main.xml",
+        "source": "com.funpay.app-main-50:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.funpay.app-mergeDebugResources-47:/layout/activity_settings.xml",
+        "source": "com.funpay.app-main-50:/layout/activity_settings.xml"
+    }
+]

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ════════════════════════════════════════════════════
+         БАЗОВАЯ ТЕМА — NoActionBar (тулбар управляем вручную)
+         ════════════════════════════════════════════════════ -->
+    <style name="Theme.FunPay" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/funpay_primary</item>
+        <item name="colorPrimaryVariant">@color/funpay_primary_dark</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">@color/funpay_primary_light</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:colorBackground">@color/bg_primary</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/nav_bg</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:hardwareAccelerated">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="cardBackgroundColor">@color/card_bg</item>
+        <item name="materialButtonStyle">@style/Widget.FunPay.Button</item>
+    </style>
+
+    <!-- Splash-тема: полный экран, без системных баров -->
+    <style name="Theme.FunPay.Splash" parent="Theme.FunPay">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/splash_bg</item>
+        <item name="android:statusBarColor">@color/splash_bg</item>
+        <item name="android:navigationBarColor">@color/splash_bg</item>
+    </style>
+
+    <!-- ThemeOverlay для тулбара настроек -->
+    <style name="ThemeOverlay.FunPay.AppBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:background">@color/toolbar_bg</item>
+        <item name="colorControlNormal">@color/toolbar_text</item>
+        <item name="android:textColorPrimary">@color/toolbar_text</item>
+    </style>
+
+    <!-- ════════════════════════════════════════════════════
+         КНОПКИ
+         ════════════════════════════════════════════════════ -->
+    <style name="Widget.FunPay.Button" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">24dp</item>
+        <item name="backgroundTint">@color/funpay_primary</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <!-- ════════════════════════════════════════════════════
+         НИЖНЯЯ НАВИГАЦИЯ — стили кнопок
+         ════════════════════════════════════════════════════ -->
+
+    <!-- Контейнер одной кнопки навигации -->
+    <style name="NavButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!-- Иконка в кнопке навигации -->
+    <style name="NavIcon">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <!-- Подпись под иконкой -->
+    <style name="NavLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/nav_inactive</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- ════════════════════════════════════════════════════
+         НАСТРОЙКИ — стили секций и карточек
+         ════════════════════════════════════════════════════ -->
+
+    <!-- Заголовок секции в настройках -->
+    <style name="SectionHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/settings_section_color</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:paddingHorizontal">4dp</item>
+    </style>
+
+    <!-- Карточка настроек -->
+    <style name="SettingsCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">14dp</item>
+        <item name="cardBackgroundColor">@color/card_bg</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+</resources>
