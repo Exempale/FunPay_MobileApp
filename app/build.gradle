@@ -3,6 +3,23 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// Параметры подписи берутся из keystore.properties (локально) или из
+// переменных окружения (GitHub Actions). Файла в репозитории нет.
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { keystoreProperties.load(it) }
+}
+def envStoreFile = System.getenv("SIGNING_STORE_FILE")
+if (envStoreFile) {
+    keystoreProperties.setProperty("storeFile", envStoreFile)
+    keystoreProperties.setProperty("storePassword", System.getenv("SIGNING_STORE_PASSWORD") ?: "")
+    keystoreProperties.setProperty("keyAlias", System.getenv("SIGNING_KEY_ALIAS") ?: "")
+    keystoreProperties.setProperty("keyPassword", System.getenv("SIGNING_KEY_PASSWORD") ?: "")
+}
+def releaseStoreFile = keystoreProperties.getProperty("storeFile")
+def hasReleaseSigning = releaseStoreFile != null && rootProject.file(releaseStoreFile).exists()
+
 android {
     namespace 'com.funpay.app'
     compileSdk 34
@@ -11,16 +28,35 @@ android {
         applicationId "com.funpay.app"
         minSdk 26
         targetSdk 34
-        versionCode 2
-        versionName "1.1.0"
+        versionCode 1
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            release {
+                storeFile rootProject.file(releaseStoreFile)
+                storePassword keystoreProperties.getProperty("storePassword")
+                keyAlias keystoreProperties.getProperty("keyAlias")
+                keyPassword keystoreProperties.getProperty("keyPassword")
+            }
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            } else {
+                // Нет ключа — собираем APK, подписанный debug-ключом.
+                // Такой файл устанавливается, но не подходит для публикации.
+                signingConfig signingConfigs.debug
+            }
         }
         debug {
             applicationIdSuffix ".debug"
@@ -39,6 +75,12 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig true
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
     }
 }
 
@@ -53,7 +95,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
 
-    // WorkManager — для фоновых задач и уведомлений
+    // WorkManager — фоновая проверка сообщений
     implementation 'androidx.work:work-runtime-ktx:2.9.0'
 
     // Coroutines

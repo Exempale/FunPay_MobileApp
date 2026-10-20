@@ -20,4 +20,6 @@ captures/
 *.apk
 *.aab
 *.keystore
+keystore.properties
+release.keystore
 !debug.keystore

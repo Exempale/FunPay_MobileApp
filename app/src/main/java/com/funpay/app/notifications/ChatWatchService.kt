@@ -43,6 +43,8 @@ class ChatWatchService : Service() {
         fun start(context: Context) {
             if (!Prefs.notificationsEnabled(context)) return
             if (!Prefs.instantWatchEnabled(context)) return
+            // Без разрешения на уведомления foreground-сервис бессмысленен.
+            if (!NotificationHelper.canPostNotifications(context)) return
 
             val intent = Intent(context, ChatWatchService::class.java).setAction(ACTION_START)
             try {
@@ -127,7 +129,9 @@ class ChatWatchService : Service() {
 
         pollingJob = scope.launch {
             while (isActive) {
-                if (!Prefs.notificationsEnabled(this@ChatWatchService)) {
+                if (!Prefs.notificationsEnabled(this@ChatWatchService) ||
+                    !Prefs.instantWatchEnabled(this@ChatWatchService)
+                ) {
                     stopSelf()
                     break
                 }

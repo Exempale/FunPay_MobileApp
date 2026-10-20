@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.funpay.app.BuildConfig
 import com.funpay.app.R
 import com.funpay.app.databinding.ActivitySettingsBinding
 import com.funpay.app.notifications.ChatWatchService
@@ -101,7 +102,7 @@ class SettingsActivity : AppCompatActivity() {
         binding.btnCheckNow.isEnabled = notifsOn
         binding.btnTestNotification.isEnabled = notifsOn
 
-        binding.tvAppVersion.text = getString(R.string.app_version)
+        binding.tvAppVersion.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
         updateStatus()
     }
 

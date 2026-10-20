@@ -67,6 +67,7 @@ object NotificationCenter {
         }
 
         val previous = loadState(prefs)
+        val previousTotal = prefs.getInt(Prefs.KEY_LAST_TOTAL_UNREAD, 0)
         val fresh = ArrayList<NewMessage>()
 
         if (!firstRun) {
@@ -113,6 +114,22 @@ object NotificationCenter {
                 )
             }
             NotificationHelper.showMessagesSummary(context, result.totalUnread.coerceAtLeast(fresh.size))
+        } else if (!firstRun && result.totalUnread > previousTotal && suppressChatId <= 0L) {
+            // Счётчик в шапке вырос, но по списку диалогов новых сообщений
+            // не нашлось (например, изменилась разметка). Уведомление всё
+            // равно показываем — лучше сводное, чем никакого.
+            Log.d(TAG, "Unread grew to ${result.totalUnread} without per-chat diff")
+            NotificationHelper.showMessagesSummary(context, result.totalUnread)
+        }
+
+        // Чат прочитан — убираем его уведомление из шторки.
+        if (result.totalUnread == 0) {
+            NotificationHelper.cancelSummary(context)
+            result.chats.forEach { chat -> NotificationHelper.cancelChatNotification(context, chat.id) }
+        } else {
+            result.chats.filter { !it.unread }.forEach { chat ->
+                NotificationHelper.cancelChatNotification(context, chat.id)
+            }
         }
 
         return Outcome(fresh, result.totalUnread, true, firstRun)

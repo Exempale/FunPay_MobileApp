@@ -2,7 +2,7 @@
 <resources>
     <!-- Общее -->
     <string name="app_name">FunPay</string>
-    <string name="app_version">Версия 1.1.0</string>
+    <string name="app_version">Версия %1$s</string>
     <string name="retry">Повторить</string>
     <string name="cancel">Отмена</string>
     <string name="ok">OK</string>
@@ -92,7 +92,7 @@
     <string name="notif_status_never">Проверка ещё не выполнялась</string>
     <string name="notif_permission_denied">Уведомления запрещены в настройках Android</string>
     <string name="notif_test_title">FunPay</string>
-    <string name="notif_test_text">Уведомления работают 🎉</string>
+    <string name="notif_test_text">Уведомления работают</string>
     <string name="notif_login_title">Требуется вход</string>
     <string name="notif_login_text">Сессия FunPay истекла. Войдите в аккаунт, чтобы получать уведомления о сообщениях</string>
     <string name="notif_messages_summary">Новых сообщений: %d</string>

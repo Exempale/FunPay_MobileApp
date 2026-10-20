@@ -1,16 +1,15 @@
 package com.funpay.app.ui.webview
 
 /**
- * PageScripts — JS-скрипты, которые внедряются в загруженные страницы FunPay.
+ * Скрипты, которые внедряются в загруженные страницы FunPay.
  *
- * 1) [UNREAD_WATCHER] — следит за счётчиком непрочитанных сообщений в шапке
- *    сайта. Благодаря ему уведомление приходит практически сразу, пока
- *    приложение открыто (не нужно ждать фоновую проверку).
+ * [PULL_TO_REFRESH] сообщает нативной части, можно ли сейчас начинать
+ * обновление свайпом вниз. Решение принимается строго: обновление разрешено
+ * только если палец находится вне любого прокручиваемого контейнера и сама
+ * страница прокручена в самое начало. На страницах чатов обновление запрещено.
  *
- * 2) [PULL_TO_REFRESH] — сообщает нативному слою, можно ли сейчас делать
- *    pull-to-refresh. Именно этот скрипт исправляет баг «листаю чат вверх —
- *    страница перезагружается»: в диалоге обновление по свайпу выключено,
- *    а внутри скроллящегося контейнера — только когда он действительно вверху.
+ * [UNREAD_WATCHER] следит за счётчиком непрочитанных в шапке сайта и за
+ * списком диалогов, пока приложение открыто, и передаёт состояние в натив.
  */
 object PageScripts {
 
@@ -32,34 +31,44 @@ object PageScripts {
             return (el.scrollHeight - el.clientHeight) > 4;
           }
 
+          // Ближайший прокручиваемый предок элемента (или сам элемент).
           function scrollerAt(el) {
             var node = el;
-            while (node && node !== document.body && node !== document.documentElement) {
+            while (node && node.nodeType === 1) {
               if (isScrollable(node)) { return node; }
+              if (node === document.body) { break; }
               node = node.parentElement;
             }
             return null;
           }
 
           function chatOpen() {
-            if (document.querySelector('.chat-message-list')) { return true; }
-            return /[?&]node=(\d+)/.test(location.search || '');
+            if (/\/chat\//.test(location.pathname || '')) { return true; }
+            if (/[?&]node=(\d+)/.test(location.search || '')) { return true; }
+            return !!document.querySelector(
+              '.chat-message-list, .chat-msg-item, .chat-header, .chat-form'
+            );
+          }
+
+          function docScrollTop() {
+            return window.scrollY ||
+                   window.pageYOffset ||
+                   document.documentElement.scrollTop ||
+                   document.body.scrollTop || 0;
           }
 
           function allowed() {
+            // В чате свайп вниз — это всегда чтение истории, а не обновление.
             if (chatOpen()) { return false; }
-            var scroller = scrollerAt(lastTouch);
-            if (scroller) { return scroller.scrollTop <= 0; }
-            var y = window.scrollY ||
-                    document.documentElement.scrollTop ||
-                    document.body.scrollTop || 0;
-            return y <= 0;
+            // Палец на прокручиваемом блоке (список лотов, сообщений и т.п.).
+            if (lastTouch && scrollerAt(lastTouch)) { return false; }
+            return docScrollTop() <= 0;
           }
 
-          function report() {
+          function report(force) {
             try {
               var value = allowed();
-              if (value === lastState) { return; }
+              if (value === lastState && !force) { return; }
               lastState = value;
               if (window.FunPayBridge && window.FunPayBridge.setPullToRefreshEnabled) {
                 window.FunPayBridge.setPullToRefreshEnabled(value);
@@ -69,22 +78,27 @@ object PageScripts {
 
           document.addEventListener('touchstart', function (e) {
             lastTouch = e.target;
-            report();
+            report(true);
           }, true);
 
           document.addEventListener('touchend', function () {
-            setTimeout(report, 60);
+            setTimeout(function () { report(false); }, 60);
           }, true);
 
-          document.addEventListener('scroll', report, true);
+          document.addEventListener('touchcancel', function () {
+            setTimeout(function () { report(false); }, 60);
+          }, true);
+
+          document.addEventListener('scroll', function () { report(false); }, true);
           document.addEventListener('click', function () {
-            setTimeout(report, 250);
+            setTimeout(function () { report(false); }, 250);
           }, true);
-          window.addEventListener('resize', report);
-          window.addEventListener('pageshow', report);
 
-          setInterval(report, 250);
-          report();
+          window.addEventListener('resize', function () { report(false); });
+          window.addEventListener('pageshow', function () { report(true); });
+
+          setInterval(function () { report(false); }, 300);
+          report(true);
         })();
     """.trimIndent()
 
@@ -103,8 +117,10 @@ object PageScripts {
             return (el.textContent || '').replace(/\s+/g, ' ').trim();
           }
 
+          // Значение бейджа рядом с пунктом меню «Чат».
           function totalUnread() {
-            var badge = document.querySelector('a.menu-item-chat span.badge');
+            var badge = document.querySelector('a.menu-item-chat span.badge') ||
+                        document.querySelector('.menu-item-chat .badge');
             return toInt(text(badge));
           }
 
@@ -114,12 +130,11 @@ object PageScripts {
           }
 
           function chats() {
-            var items = document.querySelectorAll('a.contact-item');
+            var items = document.querySelectorAll('a.contact-item[data-id]');
             var out = [];
-            for (var i = 0; i < items.length && i < 25; i++) {
+            for (var i = 0; i < items.length && i < 30; i++) {
               var item = items[i];
-              var nameEl = item.querySelector('.media-user-name') ||
-                           item.querySelector('.contact-item-name');
+              var nameEl = item.querySelector('.media-user-name');
               var msgEl = item.querySelector('.contact-item-message');
               out.push({
                 id: toInt(item.getAttribute('data-id')),
@@ -133,31 +148,25 @@ object PageScripts {
             return out;
           }
 
-          var lastTotal = -1;
-          try {
-            var stored = parseInt(window.localStorage.getItem('__fpUnreadLast'), 10);
-            if (!isNaN(stored)) { lastTotal = stored; }
-          } catch (e) { }
+          var lastPayload = null;
 
           function report() {
             try {
-              var total = totalUnread();
-              if (total === lastTotal) { return; }
-              lastTotal = total;
-              try {
-                window.localStorage.setItem('__fpUnreadLast', String(total));
-              } catch (e) { }
-
               if (!window.FunPayBridge || !window.FunPayBridge.reportUnread) { return; }
-              window.FunPayBridge.reportUnread(
-                total,
-                activeChatId(),
-                JSON.stringify(chats())
-              );
+
+              var total = totalUnread();
+              var active = activeChatId();
+              var payload = total + '|' + active + '|' + JSON.stringify(chats());
+              if (payload === lastPayload) { return; }
+              lastPayload = payload;
+
+              window.FunPayBridge.reportUnread(total, active, JSON.stringify(chats()));
             } catch (e) { }
           }
 
-          setInterval(report, 3000);
+          // Счётчик в шапке меняется без перезагрузки страницы, поэтому
+          // состояние проверяется раз в секунду. Отправляется только изменение.
+          setInterval(report, 1000);
 
           if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', report);
@@ -165,6 +174,9 @@ object PageScripts {
             report();
           }
           window.addEventListener('pageshow', report);
+          document.addEventListener('visibilitychange', function () {
+            if (!document.hidden) { report(); }
+          });
         })();
     """.trimIndent()
 }

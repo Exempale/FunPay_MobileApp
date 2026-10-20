@@ -6,6 +6,7 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import android.webkit.JavascriptInterface
+import com.funpay.app.BuildConfig
 import com.funpay.app.notifications.NotificationHelper
 import com.funpay.app.utils.CookieHelper
 import org.json.JSONObject
@@ -129,6 +130,6 @@ class FunPayJsBridge(
 
     private companion object {
         const val TAG = "FunPayJsBridge"
-        const val APP_VERSION = "1.1.0"
+        val APP_VERSION: String = BuildConfig.VERSION_NAME
     }
 }

@@ -124,6 +124,24 @@ object NotificationHelper {
         safeNotify(context, notificationIdForChat(chatId), notification)
     }
 
+    /** Убирает уведомление конкретного чата (например, когда он прочитан). */
+    fun cancelChatNotification(context: Context, chatId: Long) {
+        try {
+            NotificationManagerCompat.from(context).cancel(notificationIdForChat(chatId))
+        } catch (_: Exception) {
+            // ignore
+        }
+    }
+
+    /** Убирает сводное уведомление (когда все сообщения прочитаны). */
+    fun cancelSummary(context: Context) {
+        try {
+            NotificationManagerCompat.from(context).cancel(NOTIF_ID_SUMMARY)
+        } catch (_: Exception) {
+            // ignore
+        }
+    }
+
     /** Сводное уведомление группы чатов. */
     fun showMessagesSummary(context: Context, totalUnread: Int) {
         if (!canNotify(context)) return

@@ -29,10 +29,11 @@ object CookieHelper {
             savedCookies.split(";").forEach { cookie ->
                 val trimmed = cookie.trim()
                 if (trimmed.isNotEmpty() && trimmed.contains("=")) {
+                    // setCookie() асинхронный: без flush() на главном потоке,
+                    // иначе старт приложения ждёт запись на диск.
                     cookieManager.setCookie(FUNPAY_URL, trimmed)
                 }
             }
-            cookieManager.flush()
         }
     }
 
@@ -46,7 +47,6 @@ object CookieHelper {
 
         val cookieManager = CookieManager.getInstance()
         val cookies = cookieManager.getCookie(url)
-        cookieManager.flush()
 
         if (cookies.isNullOrEmpty()) return
 

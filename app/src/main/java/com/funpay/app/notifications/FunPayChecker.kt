@@ -82,6 +82,7 @@ object FunPayChecker {
 
     private val TAG_STRIP = Regex("<[^>]*>")
     private val SPACES = Regex("\\s+")
+    private val WHITESPACE = Regex("\\s+")
 
     /**
      * Выполняет проверку. Возвращает null только при сетевой ошибке
@@ -90,7 +91,13 @@ object FunPayChecker {
      */
     fun fetch(context: Context): ChatCheckResult? {
         val cookies = CookieHelper.savedCookies(context).orEmpty()
-        val body = httpGet(CHAT_URL, cookies) ?: return null
+
+        // Одна повторная попытка: короткий сбой сети не должен приводить
+        // к пропущенному сообщению.
+        val body = httpGet(CHAT_URL, cookies)
+            ?: httpGet(CHAT_URL, cookies)
+            ?: return null
+
         return parse(body)
     }
 
@@ -149,11 +156,11 @@ object FunPayChecker {
         val chats = parseChats(body)
         val parsedChatList = body.contains("contact-list") || body.contains("contact-item")
 
-        // Счётчик в шапке — самый надёжный источник, но иногда он отстаёт
+        // Счётчик в шапке — самый надёжный источник, но он может отставать
         // от списка чатов, поэтому берём максимум из двух значений.
         val headerUnread = parseHeaderUnread(body)
         val unreadChats = chats.count { it.unread }
-        val totalUnread = if (authorized) maxOf(headerUnread ?: 0, unreadChats) else 0
+        val totalUnread = if (authorized) maxOf(headerUnread, unreadChats) else 0
 
         return ChatCheckResult(
             totalUnread = totalUnread,
@@ -163,8 +170,8 @@ object FunPayChecker {
         )
     }
 
-    /** Счётчик непрочитанных в шапке сайта. null — бейджа нет (0 непрочитанных). */
-    private fun parseHeaderUnread(body: String): Int? {
+    /** Счётчик непрочитанных в шапке сайта (0 — бейджа нет). */
+    private fun parseHeaderUnread(body: String): Int {
         val chatLink = TAG_MENU_CHAT.find(body) ?: return 0
         val badge = TAG_BADGE_NUMBER.find(chatLink.groupValues[1]) ?: return 0
         return badge.groupValues[1].replace(" ", "").toIntOrNull() ?: 0
@@ -189,7 +196,7 @@ object FunPayChecker {
             val chunk = body.substring(start, end)
 
             val classes = attr(tag, "class").orEmpty()
-            val unread = classes.split(" ").any { it.equals("unread", ignoreCase = true) }
+            val unread = classes.split(WHITESPACE).any { it.equals("unread", ignoreCase = true) }
 
             val name = textOf(chunk, "media-user-name")
                 .ifEmpty { textOf(chunk, "contact-item-name") }
@@ -250,7 +257,11 @@ object FunPayChecker {
         out = numeric.replace(out) { match ->
             val radix = if (match.groupValues[1].isEmpty()) 10 else 16
             val code = match.groupValues[2].toIntOrNull(radix)
-            if (code != null && code > 0) String(Character.toChars(code)) else match.value
+            if (code != null && Character.isValidCodePoint(code) && code > 0) {
+                String(Character.toChars(code))
+            } else {
+                match.value
+            }
         }
         return out
     }

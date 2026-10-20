@@ -35,6 +35,7 @@ import com.funpay.app.ui.webview.PageScripts
 import com.funpay.app.utils.CookieHelper
 import com.funpay.app.utils.NetworkHelper
 import com.funpay.app.utils.Prefs
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 
@@ -56,9 +57,13 @@ class MainActivity : AppCompatActivity() {
     private var currentTab = BottomTab.HOME
     private var filePathCallback: ValueCallback<Array<Uri>>? = null
 
-    /** Разрешён ли сейчас pull-to-refresh (управляется из JS) */
+    /**
+     * Разрешён ли сейчас pull-to-refresh (управляется из JS).
+     * По умолчанию запрещён: лучше не обновить страницу, чем случайно
+     * перезагрузить её во время чтения чата.
+     */
     @Volatile
-    private var pullToRefreshAllowed = true
+    private var pullToRefreshAllowed = false
 
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -122,8 +127,11 @@ class MainActivity : AppCompatActivity() {
         setupBackNavigation()
 
         NotificationHelper.createNotificationChannels(this)
-        requestNotificationPermission()
-        startBackgroundWatching()
+
+        // Всё, что не нужно для первого кадра (диалог разрешений, запуск
+        // сервиса, инициализация WorkManager), выполняем после отрисовки,
+        // чтобы заставка не «висела» дольше необходимого.
+        binding.root.post { requestNotificationPermission() }
 
         if (savedInstanceState != null) {
             binding.webView.restoreState(savedInstanceState)
@@ -145,6 +153,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupWebView() {
         val webViewClient = FunPayWebViewClient(
             onPageStarted = { _ ->
+                // До отчёта из JS считаем, что обновление запрещено.
+                pullToRefreshAllowed = false
                 showError(false)
             },
             onPageFinished = { url ->
@@ -183,6 +193,7 @@ class MainActivity : AppCompatActivity() {
 
             isScrollbarFadingEnabled = true
             scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+            setRendererPriorityPolicy(WebView.RENDERER_PRIORITY_IMPORTANT, false)
 
             // JS Bridge
             addJavascriptInterface(
@@ -358,6 +369,15 @@ class MainActivity : AppCompatActivity() {
             setOnChildScrollUpCallback { _, _ -> !pullToRefreshAllowed }
 
             setOnRefreshListener {
+                // Двойная страховка на случай, если JS не успел сообщить
+                // своё состояние: в чате и в прокручиваемом блоке обновления нет.
+                val url = binding.webView.url.orEmpty()
+                val insideChat = url.contains("/chat/") && !url.endsWith("/chat/")
+                if (!pullToRefreshAllowed || insideChat) {
+                    isRefreshing = false
+                    return@setOnRefreshListener
+                }
+
                 if (NetworkHelper.isConnected(this@MainActivity)) {
                     binding.webView.reload()
                 } else {
@@ -465,18 +485,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun startBackgroundWatching() {
         if (!Prefs.notificationsEnabled(this)) return
-        val notificationsGranted = NotificationHelper.canPostNotifications(this)
-        if (!notificationsGranted) return
+        if (!NotificationHelper.canPostNotifications(this)) return
 
-        ChatWatchService.start(this)
-        FunPayWorker.scheduleWork(this)
+        // WorkManager при первом обращении читает базу с диска — уводим это
+        // с главного потока, чтобы не тормозить запуск приложения.
+        lifecycleScope.launch(Dispatchers.IO) {
+            ChatWatchService.start(this@MainActivity)
+            FunPayWorker.scheduleWork(this@MainActivity)
+        }
     }
 
     // ─── Lifecycle ────────────────────────────────────────────────────────────
 
     override fun onStart() {
         super.onStart()
-        startBackgroundWatching()
+        binding.root.post {
+            if (!isFinishing && !isDestroyed) startBackgroundWatching()
+        }
     }
 
     override fun onResume() {
