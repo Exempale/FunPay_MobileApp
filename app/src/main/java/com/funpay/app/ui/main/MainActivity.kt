@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.funpay.app.R
 import com.funpay.app.databinding.ActivityMainBinding
 import com.funpay.app.notifications.ChatWatchService
@@ -34,6 +35,7 @@ import com.funpay.app.ui.webview.PageScripts
 import com.funpay.app.utils.CookieHelper
 import com.funpay.app.utils.NetworkHelper
 import com.funpay.app.utils.Prefs
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 
 /**
@@ -246,11 +248,21 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
+            if (chats.isEmpty()) {
+                // На этой странице нет списка диалогов (главная, заказы, профиль) —
+                // виден только счётчик в шапке. Делаем полноценную проверку,
+                // чтобы в уведомлении были имя собеседника и текст сообщения.
+                if (total > 0) {
+                    lifecycleScope.launch { FunPayWorker.checkNow(this@MainActivity) }
+                }
+                return
+            }
+
             val result = ChatCheckResult(
                 totalUnread = total,
                 chats = chats,
                 authorized = true,
-                parsedChatList = chats.isNotEmpty(),
+                parsedChatList = true,
             )
             NotificationCenter.process(this, result, suppressChatId = activeChatId)
         } catch (e: Exception) {

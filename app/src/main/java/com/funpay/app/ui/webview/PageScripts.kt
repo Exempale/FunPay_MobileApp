@@ -134,12 +134,19 @@ object PageScripts {
           }
 
           var lastTotal = -1;
+          try {
+            var stored = parseInt(window.localStorage.getItem('__fpUnreadLast'), 10);
+            if (!isNaN(stored)) { lastTotal = stored; }
+          } catch (e) { }
 
           function report() {
             try {
               var total = totalUnread();
               if (total === lastTotal) { return; }
               lastTotal = total;
+              try {
+                window.localStorage.setItem('__fpUnreadLast', String(total));
+              } catch (e) { }
 
               if (!window.FunPayBridge || !window.FunPayBridge.reportUnread) { return; }
               window.FunPayBridge.reportUnread(
