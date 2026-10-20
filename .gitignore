@@ -1,0 +1,25 @@
+# ── Gradle ───────────────────────────────────────────────────
+.gradle/
+build/
+app/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ── Локальная конфигурация SDK ───────────────────────────────
+local.properties
+
+# ── Android Studio / IntelliJ ────────────────────────────────
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ── Прочее ───────────────────────────────────────────────────
+.DS_Store
+*.log
+*.apk
+*.aab
+*.keystore
+keystore.properties
+release.keystore
+!debug.keystore

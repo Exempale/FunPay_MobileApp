@@ -100,8 +100,9 @@ class FunPayWebViewClient(
         super.onReceivedError(view, request, error)
         if (request?.isForMainFrame == true) {
             hasError = true
-            // Загружаем пустую страницу чтобы скрыть стандартное WebView-сообщение об ошибке
-            view?.loadUrl("about:blank")
+            // НЕ грузим about:blank — иначе теряется история и страница «мигает»,
+            // а при случайном свайпе выглядит как перезагрузка. Ошибку показывает
+            // нативный layoutError поверх WebView.
             onReceivedError()
         }
     }
@@ -116,7 +117,6 @@ class FunPayWebViewClient(
         @Suppress("DEPRECATION")
         super.onReceivedError(view, errorCode, description, failingUrl)
         hasError = true
-        view?.loadUrl("about:blank")
         onReceivedError()
     }
 

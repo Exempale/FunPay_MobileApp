@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Android 12+ (API 31): системная заставка.
+    Задаём её цвет и иконку, чтобы не было белой вспышки перед нашим фоном.
+-->
+<resources>
+
+    <style name="Theme.FunPay.Launch" parent="Theme.FunPay">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowSplashScreenBackground">@color/splash_blue</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/splash_blue</item>
+        <item name="android:statusBarColor">@color/splash_blue</item>
+        <item name="android:navigationBarColor">@color/splash_blue</item>
+    </style>
+
+</resources>
