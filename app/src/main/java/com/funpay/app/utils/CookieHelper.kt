@@ -5,17 +5,18 @@ import android.webkit.CookieManager
 import android.webkit.WebView
 
 /**
- * CookieHelper — управление cookie для WebView.
- * Синхронизирует куки между сессиями, чтобы пользователь оставался авторизованным.
+ * CookieHelper — управление cookie для WebView и фоновых проверок.
+ *
+ * ВАЖНО: именно здесь раньше была причина «неработающих» уведомлений —
+ * cookies никогда не сохранялись в SharedPreferences, поэтому Worker
+ * ходил на funpay.com без сессии и всегда видел анонимную страницу.
  */
 object CookieHelper {
 
-    private const val PREFS_NAME = "funpay_prefs"
-    private const val KEY_COOKIES = "saved_cookies"
     private const val FUNPAY_URL = "https://funpay.com"
 
     /**
-     * Синхронизирует сохранённые куки с WebView.
+     * Синхронизирует сохранённые cookies с WebView.
      * Вызывать перед первой загрузкой страницы.
      */
     fun syncCookies(webView: WebView) {
@@ -23,15 +24,11 @@ object CookieHelper {
         cookieManager.setAcceptCookie(true)
         cookieManager.setAcceptThirdPartyCookies(webView, true)
 
-        // Загружаем сохранённые куки
-        val prefs = webView.context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val savedCookies = prefs.getString(KEY_COOKIES, null)
-
+        val savedCookies = Prefs.get(webView.context).getString(Prefs.KEY_SAVED_COOKIES, null)
         if (!savedCookies.isNullOrEmpty()) {
-            // Восстанавливаем каждый кuki
             savedCookies.split(";").forEach { cookie ->
                 val trimmed = cookie.trim()
-                if (trimmed.isNotEmpty()) {
+                if (trimmed.isNotEmpty() && trimmed.contains("=")) {
                     cookieManager.setCookie(FUNPAY_URL, trimmed)
                 }
             }
@@ -40,36 +37,37 @@ object CookieHelper {
     }
 
     /**
-     * Сохраняет куки для указанного URL.
-     * Вызывать после каждой успешной загрузки страницы.
+     * Забирает актуальные cookies из WebView и сохраняет их для фоновых задач.
+     * Вызывать после каждой успешной загрузки страницы и в onPause().
      */
-    fun saveCookies(url: String?) {
+    fun saveCookies(context: Context, url: String?) {
         if (url.isNullOrEmpty()) return
+        if (!url.startsWith("http")) return
 
         val cookieManager = CookieManager.getInstance()
-        val cookies = cookieManager.getCookie(url) ?: return
-
-        // Куки сохраняются через Application Context — используем статический доступ
-        // (В реальном проекте лучше передавать Context через DI)
-        android.app.Application::class.java // placeholder
+        val cookies = cookieManager.getCookie(url)
         cookieManager.flush()
-    }
 
-    /**
-     * Сохраняет куки в SharedPreferences (для фоновых Worker'ов).
-     */
-    fun persistCookies(context: Context, url: String) {
-        val cookieManager = CookieManager.getInstance()
-        val cookies = cookieManager.getCookie(url) ?: return
+        if (cookies.isNullOrEmpty()) return
 
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit()
-            .putString(KEY_COOKIES, cookies)
+        Prefs.get(context).edit()
+            .putString(Prefs.KEY_SAVED_COOKIES, cookies)
+            .putLong(Prefs.KEY_COOKIES_SAVED_AT, System.currentTimeMillis())
             .apply()
     }
 
+    /** Совместимый алиас, используется из JS-моста. */
+    fun persistCookies(context: Context, url: String) = saveCookies(context, url)
+
+    /** Возвращает сохранённую cookie-строку для фоновых запросов. */
+    fun savedCookies(context: Context): String? =
+        Prefs.get(context).getString(Prefs.KEY_SAVED_COOKIES, null)
+
+    fun hasSavedSession(context: Context): Boolean =
+        !savedCookies(context).isNullOrEmpty()
+
     /**
-     * Принудительно сохраняет все куки на диск.
+     * Принудительно сохраняет все cookies на диск.
      * Вызывать в onPause().
      */
     fun flush() {
@@ -77,7 +75,7 @@ object CookieHelper {
     }
 
     /**
-     * Очищает все куки и сохранённые данные.
+     * Очищает все cookies и сохранённые данные.
      */
     fun clearAll(context: Context) {
         CookieManager.getInstance().apply {
@@ -85,18 +83,19 @@ object CookieHelper {
             flush()
         }
 
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit()
-            .remove(KEY_COOKIES)
+        Prefs.get(context).edit()
+            .remove(Prefs.KEY_SAVED_COOKIES)
+            .remove(Prefs.KEY_COOKIES_SAVED_AT)
+            .remove(Prefs.KEY_STATE)
+            .remove(Prefs.KEY_BASELINE_DONE)
             .apply()
     }
 
     /**
-     * Очищает историю навигации (отдельно от кuki).
+     * Очищает историю навигации (отдельно от cookies).
      */
     fun clearHistory(context: Context) {
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit()
+        Prefs.get(context).edit()
             .remove("nav_history")
             .apply()
     }

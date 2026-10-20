@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    splash_background.xml
+    Фон окна при холодном старте (android:windowBackground у Theme.FunPay.Launch).
+    Рисуется системой мгновенно — это и есть «быстрый сплеш».
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/splash_blue"/>
+
+    <item
+        android:width="132dp"
+        android:height="132dp"
+        android:gravity="center"
+        android:drawable="@drawable/ic_splash_logo"/>
+
+</layer-list>

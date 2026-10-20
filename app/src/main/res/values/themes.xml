@@ -25,12 +25,15 @@
         <item name="materialButtonStyle">@style/Widget.FunPay.Button</item>
     </style>
 
-    <!-- Splash-тема: полный экран, без системных баров -->
-    <style name="Theme.FunPay.Splash" parent="Theme.FunPay">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@color/splash_bg</item>
-        <item name="android:statusBarColor">@color/splash_bg</item>
-        <item name="android:navigationBarColor">@color/splash_bg</item>
+    <!--
+        Launch-тема: системная заставка через windowBackground.
+        Отдельной SplashActivity больше нет — окно рисуется мгновенно,
+        поэтому запуск происходит без «белого экрана» и без задержек.
+    -->
+    <style name="Theme.FunPay.Launch" parent="Theme.FunPay">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/splash_blue</item>
+        <item name="android:navigationBarColor">@color/splash_blue</item>
     </style>
 
     <!-- ThemeOverlay для тулбара настроек -->

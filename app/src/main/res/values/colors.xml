@@ -44,6 +44,7 @@
 
     <!-- ── Splash ─────────────────────────────────────── -->
     <color name="splash_bg">#FFFFFF</color>
+    <color name="splash_blue">#2D8CFF</color>
 
     <!-- ── Status bar ─────────────────────────────────── -->
     <color name="status_bar">#1A6FD4</color>
